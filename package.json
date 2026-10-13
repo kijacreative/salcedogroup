@@ -1,0 +1,11 @@
+{
+  "name": "salcedo-group-site",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node site/build.mjs",
+    "dev": "node site/build.mjs && npx --yes serve dist -l 4173"
+  },
+  "engines": { "node": ">=18" }
+}
