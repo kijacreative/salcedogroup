@@ -25,6 +25,6 @@ batched scroll reveals and image parallax. Everything respects `prefers-reduced-
 scripts fail to load.
 
 ## Before launch
-- Production domain is `https://salcedogroupinc.com` (override with `SITE_URL` for staging builds).
+- Production domain is `https://www.salcedogroupinc.com` (override with `SITE_URL` for staging builds).
 - Set `FORM_ENDPOINT` so the proposal form can deliver requests; until then it asks visitors to call.
 - Several source images are under 1,200px wide; higher-resolution originals will sharpen the hero and galleries.

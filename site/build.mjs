@@ -31,9 +31,12 @@ function pic(name, alt, { cls = '', eager = false, sizes = '100vw', attrs = '' }
 
 const arrow = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
-function logo(cls = '') {
-  return `<svg class="logo ${cls}" viewBox="0 0 360 240" role="img" aria-label="Salcedo Group Inc"><rect width="360" height="240" rx="8" class="l-f"/><rect x="6" y="6" width="348" height="228" rx="4" class="l-b"/><text x="180" y="130" textLength="300" lengthAdjust="spacingAndGlyphs" class="l-s">SGI</text><rect x="26" y="137" width="308" height="7" class="l-r"/><text x="180" y="198" textLength="300" lengthAdjust="spacing" class="l-n">SALCEDO GROUP INC</text></svg>`;
+function logo(variant = '') {
+  return `<img class="lockup" src="/brand/sgi-lockup${variant}.svg" width="282" height="100" alt="SGi, Salcedo Group, Inc.">`;
 }
+const markImg = (c = 'orange', cls = 'bm') => `<img class="${cls}" src="/brand/sgi-mark${c ? '-' + c : ''}.svg" width="12" height="12" alt="" aria-hidden="true">`;
+// Section label in the v3 voice: orange mark, number, "( Name )".
+const label = (num, text, tag = 'p') => `<${tag} class="label">${markImg()}${num ? `<span class="num">${num}</span>` : ''}( ${esc(text)} )</${tag}>`;
 
 // Deterministic contour lines: an engineering nod (topographic survey) used as texture.
 function contours({ w = 1200, h = 800, cx = 0.72, cy = 0.42, rings = 14, seed = 7, cls = 'contours' } = {}) {
@@ -92,10 +95,8 @@ function projectCard(p, { big = false, sizes = '(min-width: 900px) 45vw, 100vw' 
 </article>`;
 }
 
-function ctaBand(h = 'Tell us about your project. A principal reviews every request.') {
-  return `<section class="cta" aria-labelledby="cta-h">${contours({ cx: 0.85, cy: 0.5, rings: 12, seed: 23, cls: 'contours contours-dark' })}
-<div class="wrap cta-in"><h2 id="cta-h" class="h2" data-split>${esc(h)}</h2>
-<div class="cta-actions"><a class="btn btn-light" href="/contact/">Request a proposal ${arrow}</a><a class="cta-tel" href="tel:${SITE.tel}">${SITE.phone}</a></div></div></section>`;
+function ctaBand() {
+  return '';
 }
 
 // ---------- JSON-LD base ----------
@@ -105,10 +106,12 @@ const orgLd = {
   name: SITE.name,
   alternateName: ['SGI', 'Salcedo Group'],
   url: U('/'),
-  logo: { '@type': 'ImageObject', url: U('/logo.png'), width: 720, height: 480 },
+  logo: { '@type': 'ImageObject', url: U('/logo.png'), width: 720, height: 720 },
   image: U('/img/og-default.jpg'),
   description: SITE.description,
   telephone: SITE.tel,
+  faxNumber: '+12144123089',
+  identifier: SITE.registrations.map(([k, v]) => ({ '@type': 'PropertyValue', name: k, value: v })),
   foundingDate: SITE.founded,
   founder: { '@id': U('/firm/luis-salcedo/#person') },
   numberOfEmployees: { '@type': 'QuantitativeValue', value: SITE.employees },
@@ -138,32 +141,47 @@ const websiteLd = { '@type': 'WebSite', '@id': WEBSITE, url: U('/'), name: SITE.
 
 // ---------- layout ----------
 const NAV = [
-  ['Firm', '/firm/', 'firm'],
-  ['Services', '/services/', 'services'],
-  ['Projects', '/projects/', 'projects'],
-  ['Where we work', '/where-we-work/', 'where'],
-  ['FAQ', '/faq/', 'faq'],
+  ['01', 'Firm', '/firm/', 'firm'],
+  ['02', 'Services', '/services/', 'services'],
+  ['03', 'Work', '/projects/', 'projects'],
+  ['04', 'Places', '/where-we-work/', 'where'],
+  ['05', 'FAQ', '/faq/', 'faq'],
+  ['06', 'Contact', '/contact/', 'contact'],
 ];
 
 function header(active) {
+  const links = NAV.slice(0, 5);
   return `<a class="skip" href="#main">Skip to content</a>
-<header class="site-h" data-header><div class="wrap site-h-in">
+<header class="site-h" data-header>
 <a class="brand" href="/" aria-label="${SITE.name} home">${logo()}</a>
-<nav class="nav" aria-label="Primary" id="nav"><ul>${NAV.map(([t, h, k]) => `<li><a href="${h}"${k === active ? ' aria-current="page"' : ''}>${t}</a></li>`).join('')}</ul>
-<a class="nav-tel" href="tel:${SITE.tel}">${SITE.phone}</a>
-<a class="btn btn-sm" href="/contact/"${active === 'contact' ? ' aria-current="page"' : ''}>Request a proposal</a></nav>
-<button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav" data-menu><span class="sr">Menu</span><span class="menu-i" aria-hidden="true"></span></button>
-</div><div class="progress" data-progress aria-hidden="true"></div></header>`;
+<nav class="nav" aria-label="Main"><ul>${links.map(([n, t, h, k]) => `<li><a href="${h}"${k === active ? ' aria-current="page"' : ''}><span class="num">${n}</span>${t}</a></li>`).join('')}</ul></nav>
+<div class="h-actions"><a class="btn btn-sm" href="/contact/"${active === 'contact' ? ' aria-current="page"' : ''}>Request a proposal</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-index" data-menu>Index</button></div>
+<div class="progress" data-progress aria-hidden="true"></div>
+</header>
+<div class="index" id="site-index" role="dialog" aria-modal="true" aria-label="Site index" hidden data-index>
+<div class="index-top"><span class="label-plain">( Index )</span><button type="button" class="index-x" aria-label="Close index" data-index-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+<ol class="index-list"><li><a href="/"><span class="num">00</span>Home</a></li>${NAV.map(([n, t, h, k]) => `<li><a href="${h}"${k === active ? ' aria-current="page"' : ''}><span class="num">${n}</span>${t}</a></li>`).join('')}</ol>
+<a class="btn btn-lg" href="/contact/">Request a proposal</a>
+<p class="index-foot">${markImg('', 'bm bm-14')}( ${SITE.city}, ${SITE.region} ) · <a href="tel:${SITE.tel}">${SITE.phone}</a></p>
+</div>`;
 }
 
 function footer() {
-  return `<footer class="site-f"><div class="wrap site-f-in">
-<div class="f-brand">${logo('logo-dark')}<p>${esc(SITE.description)}</p></div>
-<nav aria-label="Footer"><h2 class="f-h">Firm</h2><ul><li><a href="/firm/">About SGI</a></li>${PEOPLE.map((p) => `<li><a href="${personUrl(p)}">${esc(p.name)}</a></li>`).join('')}<li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
-<nav aria-label="Services"><h2 class="f-h">Services</h2><ul>${SERVICES.map((s) => `<li><a href="${svcUrl(s)}">${esc(s.name)}</a></li>`).join('')}</ul></nav>
-<nav aria-label="Projects and places"><h2 class="f-h">Projects</h2><ul>${PROJECTS.map((p) => `<li><a href="${projUrl(p)}">${esc(p.short)}</a></li>`).join('')}</ul><h2 class="f-h f-h2">Where we work</h2><ul>${PLACES.map((p) => `<li><a href="${placeUrl(p)}">${esc(p.name)}</a></li>`).join('')}</ul></nav>
-<address><h2 class="f-h">Office</h2><span>${SITE.name}</span><span>${SITE.street}</span><span>${SITE.city}, ${SITE.regionName} ${SITE.zip}</span><a href="tel:${SITE.tel}">${SITE.phone}</a></address>
-</div><div class="wrap f-base"><span>${SITE.credentials.join(' · ')}</span><span>© ${new Date().getFullYear()} ${SITE.name}</span></div></footer>`;
+  return `<footer class="site-f">
+<a class="f-cta" href="/contact/">Request a proposal →</a>
+<div class="f-grid">
+<div class="f-brand"><a href="/" aria-label="${SITE.name} home">${logo('-cream')}</a><p class="f-k">Civil engineering, land surveying and GIS. ${SITE.city}, ${SITE.regionName}, since ${SITE.founded}.</p></div>
+<div><p class="f-k">( Office )</p><address>${SITE.street}<br>${SITE.city}, ${SITE.regionName} ${SITE.zip}</address></div>
+<div><p class="f-k">( Contact )</p><ul><li><a href="tel:${SITE.tel}" class="u">${SITE.phone}</a></li><li>Fax ${SITE.fax}</li><li><a href="/contact/" class="u">Request a proposal</a></li></ul></div>
+<nav aria-label="Services"><p class="f-k">( Services )</p><ul>${SERVICES.map((x) => `<li><a href="${svcUrl(x)}">${esc(x.name)}</a></li>`).join('')}</ul></nav>
+<nav aria-label="Work and places"><p class="f-k">( Work )</p><ul>${PROJECTS.map((x) => `<li><a href="${projUrl(x)}">${esc(x.short)}</a></li>`).join('')}</ul><p class="f-k f-k2">( Places )</p><ul>${PLACES.map((x) => `<li><a href="${placeUrl(x)}">${esc(x.name)}</a></li>`).join('')}</ul></nav>
+<nav aria-label="Pages"><p class="f-k">( Pages )</p><ul><li><a href="/"><span class="num">00</span>Home</a></li>${NAV.map(([n, t, h]) => `<li><a href="${h}"><span class="num">${n}</span>${t}</a></li>`).join('')}${PEOPLE.map((x) => `<li><a href="${personUrl(x)}"><span class="num"></span>${esc(x.name)}</a></li>`).join('')}</ul></nav>
+</div>
+<div class="f-base"><img src="/brand/sgi-mark-cream.svg" width="20" height="20" alt="" aria-hidden="true">
+<span>${SITE.registrations.map(([k, v]) => `${k} ${v}`).join(' · ')} · ${SITE.credentials.slice(2).join(' · ')}</span>
+<span>© ${new Date().getFullYear()} ${SITE.name} · Design: Kija Creative</span></div>
+</footer>`;
 }
 
 function page({ path, title, description, active = '', body, ld = [], image = 'og-default', type = 'WebPage', crumbs = null, about = null, extraHead = '', webpageExtra = {} }) {
@@ -195,7 +213,7 @@ function page({ path, title, description, active = '', body, ld = [], image = 'o
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${U(path)}">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="theme-color" content="#1D2324">
+<meta name="theme-color" content="#135222">
 <meta property="og:type" content="${type === 'ProfilePage' ? 'profile' : path === '/' ? 'website' : 'article'}">
 <meta property="og:site_name" content="${SITE.name}">
 <meta property="og:locale" content="en_US">
@@ -211,10 +229,11 @@ function page({ path, title, description, active = '', body, ld = [], image = 'o
 <meta name="geo.placename" content="Grand Prairie">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/logo.png">
+<link rel="preload" as="image" href="/brand/sgi-lockup.svg">
 <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Inter:wght@400;500;600&family=Tinos:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/css/site.css">
 <script>(function(d){d.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');setTimeout(function(){if(!window.__sgiMotion)d.classList.remove('motion')},2500)}})(document.documentElement);</script>
 ${extraHead}<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>
@@ -228,6 +247,7 @@ ${footer()}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="/js/site.js" defer></script>
+<script src="/js/benchmarks.js" defer></script>
 </body>
 </html>
 `;
@@ -320,43 +340,82 @@ ${DISCIPLINES.map(
 <div class="qa-list">${faqList(homeFaq)}</div>
 </section>
 ${ctaBand()}`;
-  add('/', page({ path: '/', title: 'Salcedo Group, Inc. | Civil engineering and land surveying, DFW', description: 'Family-owned, minority-owned civil engineering, land surveying and GIS firm in Grand Prairie, TX, serving public and private clients across Dallas-Fort Worth since 2002.', body, ld: [faqLd(homeFaq, '/')] }));
+  add('/', page({ path: '/', title: 'Salcedo Group, Inc. | Civil engineering and land surveying, DFW', description: 'Family-owned, minority-owned civil engineering, land surveying and GIS firm in Grand Prairie, TX, serving public and private clients across DFW since 2002.', body, ld: [faqLd(homeFaq, '/')] }));
 }
 
-// Firm
+// Firm (v3 design: firm.dc.html)
 {
   const crumbs = [['Home', '/'], ['Firm', '/firm/']];
+  const years = new Date().getFullYear() - +SITE.founded;
+  const promises = [
+    ['One firm', 'Survey and design under one roof: no handoff, no coordination gap and no subconsultant markup on the survey.'],
+    ['A principal on every project', 'Luis and Michael Salcedo are named on every project team, and a principal reviews every request before it is answered.'],
+    ['Inside the right of way', 'Camp Wisdom Road was designed with no additional right-of-way acquisition. Designing inside the existing ROW is how a schedule keeps its months.'],
+  ];
+  const [luis, michael] = PEOPLE;
+  const principal = (p, line, note) => `<figure class="principal"><a href="${personUrl(p)}" class="frame frame-34" data-motion="frame" tabindex="-1" aria-hidden="true">${pic(p.img, '', { sizes: '300px' })}</a>
+<figcaption><a class="principal-n" href="${personUrl(p)}">${esc(fullName(p))}</a><span class="meta">${esc(line)}</span><span class="principal-b">${esc(note)}</span></figcaption></figure>`;
+  const more = [
+    ['02', 'Services', '/services/', 'Civil engineering, land surveying, hydrology, GIS and construction administration.'],
+    ['03', 'Work', '/projects/', 'Public projects in Dallas, Dallas County and Grand Prairie.'],
+    ['04', 'Places', '/where-we-work/', 'Where SGI works: Dallas, Grand Prairie and Dallas County.'],
+    ['06', 'Contact', '/contact/', 'Request a proposal. A principal replies within two business days.'],
+  ];
   const body = `
-<section class="page-head wrap">${breadcrumbs(crumbs)}
-<div class="split split-top"><div class="split-copy"><span class="tick"></span><h1 class="h1 h1-page" data-split>Our firm</h1>
-<p class="lede" data-speakable>In 2002, Luis M. Salcedo founded an engineering firm in his home office. Today Salcedo Group, Inc. is one of the leading civil engineering, land surveying and geospatial consulting firms in Dallas-Fort Worth.</p>
-<p>SGI gives its clients the attention of a small firm with the innovation and production of a large one. Chief Executive Officer Luis Salcedo has more than 40 years of experience as an engineer, and his son Michael has more than 25. Michael started helping his father when he was 12 and has been on the books since he was 15. Two years after he joined the company in 2006, Luis promoted him to president.</p></div>
-<figure class="split-media" data-reveal><div class="parallax" data-parallax>${pic('salcedo-family', 'The Salcedo family at the SGI Grand Prairie office', { eager: true, sizes: '(min-width: 900px) 50vw, 100vw' })}</div><figcaption>SGI Grand Prairie office, ribbon cutting 2019.</figcaption></figure></div>
+<div class="v3">${breadcrumbs(crumbs)}
+<section class="sec firm-hero" aria-labelledby="firm-title">
+<div class="firm-grid">
+<div class="stack-28">
+<p class="label rise-in">${markImg()}<span class="num">01</span>( Firm )</p>
+<h1 id="firm-title" class="d1 rise-in d1-delay">Survey and design, one firm<span class="dot">.</span></h1>
+<p class="lead rise-in d2-delay" data-speakable>Two principals hold both a PE and an RPLS. The crew that measures your site works down the hall from the engineers who design it, so there is no handoff, no coordination gap and no subconsultant markup.</p>
+</div>
+<div class="stack-20 firm-side rise-in d3-delay">
+<p>${years} years designing the streets, drainage, parks and trails of Dallas, Dallas County and Grand Prairie. Two in-house survey crews and both seals under one roof.</p>
+<ul class="facts-rule meta">
+<li>Founded by Luis M. Salcedo in ${SITE.founded}</li>
+<li>${SITE.street}, ${SITE.city}, ${SITE.regionName}</li>
+<li>NCTRCA certified M/DBE, TxDOT precertified</li>
+<li>PE licensure in ${SITE.peStates.slice(0, -1).join(', ')} and ${SITE.peStates.slice(-1)}</li>
+</ul>
+</div>
+</div>
+<figure class="wide-fig"><div class="frame frame-wide" data-motion="frame">${pic('grand-prairie-1', 'Grand Prairie City Hall, engineer of record Salcedo Group, Inc.', { eager: true, sizes: '100vw' })}</div>
+<figcaption class="meta">( <a href="/projects/grand-prairie-city-hall/">Grand Prairie Municipal Campus and New City Hall</a>, 11 acres downtown. SGI is engineer of record, a block from our own office. )</figcaption></figure>
 </section>
 
-<section class="band band-teal" aria-labelledby="cred-h">${contours({ cx: 0.1, cy: 0.6, rings: 10, seed: 41, cls: 'contours contours-light' })}<div class="wrap split">
-<h2 id="cred-h" class="h2" data-split>Be a community resource and do high-quality work.</h2>
-<div data-reveal><p>This family-owned business, 15 minutes southwest of downtown Dallas in Grand Prairie, takes pride in being one of the few minority-owned engineering firms south of the Trinity River. That approach has put SGI on some of the largest and most visible projects in Dallas and North Texas.</p>
-<p>SGI has worked on the Mill Creek diversion tunnel in the Uptown/McKinney Avenue area and on <a href="/projects/pacific-plaza/">Pacific Plaza</a> downtown, and is working on <a href="/projects/harold-simmons-park/">Harold Simmons Park</a> in the Trinity River floodway.</p>
-<ul class="chips">${SITE.credentials.map((c) => `<li>${esc(c)}</li>`).join('')}</ul></div></div></section>
-
-<section class="wrap split" aria-labelledby="ap-h">
-<div data-reveal><h2 id="ap-h" class="h2">Fiscally responsible, and built to exceed expectations</h2>
-<p>SGI creates designs that are fiscally responsible and innovative. The goal is to use the firm’s skill to make each client’s vision real. SGI works closely with clients and encourages feedback throughout.</p>
-<p>Peer review is central. The Principal-in-Charge leads frequent quality-review sessions with the design team, a QA/QC manager oversees each project, and project engineers review internally throughout, keeping schedules and construction costs on budget.</p></div>
-<figure class="pull" data-reveal><blockquote><p>“My father has taught us to be a resource to our community. The projects we work on mean something to somebody.”</p></blockquote><figcaption><a href="/firm/michael-salcedo/">Michael A. Salcedo, PE, RPLS</a>, President</figcaption></figure>
+<section class="sec sec-sand promise" aria-labelledby="promise-title">
+<div class="promise-type" data-scene="promise">
+${[1, 2, 3].map((i) => `<span class="promise-word promise-copy" data-promise-copy aria-hidden="true" style="z-index:${5 - i}">Sealed</span>`).join('')}
+<h2 id="promise-title" class="promise-word" data-promise-word>Sealed</h2>
+</div>
+<div class="stack-48 promise-body">
+<p class="lead lead-label"><span class="label label-inline">${markImg()}<span class="num">02</span>( Promise )</span>Both seals, engineer and surveyor, under one roof. Three things that means for a client.</p>
+<ul class="promises">${promises.map(([t, b]) => `<li data-motion="rise"><span class="promise-rule" aria-hidden="true">${markImg('', 'bm bm-18')}<span></span></span><h3 class="h-m">${esc(t)}</h3><p>${esc(b)}</p></li>`).join('')}</ul>
+</div>
 </section>
 
-<section id="team" class="band band-mist" aria-labelledby="team-h"><div class="wrap">
-<h2 id="team-h" class="h2" data-reveal>Our team</h2>
-<div class="team">${PEOPLE.map(
-    (p) => `<article class="person" data-reveal><a class="person-img" href="${personUrl(p)}" tabindex="-1" aria-hidden="true"><div class="zoom">${pic(p.img, '', { sizes: '160px' })}</div></a>
-<div><h3 class="h3"><a href="${personUrl(p)}">${esc(fullName(p))}</a></h3><p class="role">${esc(p.role)}</p><p>${esc(p.summary)}</p><a class="link" href="${personUrl(p)}">Full bio ${arrow}</a></div></article>`
-  ).join('')}</div>
-<div class="staff" data-reveal>${STAFF.map((g) => `<div><h3 class="kicker">${esc(g.k)}</h3>${g.v.map((n) => `<p>${esc(n)}</p>`).join('')}</div>`).join('')}</div>
-</div></section>
-${ctaBand()}`;
-  add('/firm/', page({ path: '/firm/', title: 'About the firm', description: 'Salcedo Group, Inc. is a family-owned, minority-owned civil engineering and surveying firm founded in 2002 by Luis M. Salcedo. Meet the team in Grand Prairie, TX.', active: 'firm', body, type: 'AboutPage', crumbs }));
+<section class="sec" aria-labelledby="principals-title">
+<div class="split-end">
+<h2 id="principals-title" class="d2" data-motion="rise">The people who propose are the people on site</h2>
+<p class="lead lead-label" data-motion="rise"><span class="label label-inline">${markImg()}<span class="num">03</span>( Principals )</span>Two generations of the Salcedo family, both registered as engineer and surveyor. A principal reviews every request.</p>
+</div>
+<div class="principals">
+${principal(luis, 'Founder · since ' + SITE.founded, 'Founded SGI in his home office in 2002 and holds registrations as both engineer and surveyor.')}
+${principal(michael, 'President', 'Second generation of the firm. Leads survey in the field and design in the office.')}
+<figure class="quote-card" data-motion="rise"><blockquote>“As surveyor, I'm the first person who puts boots on ground. We survey the project, measure the lot, then we bring it into the office and do all the engineering design work.”</blockquote><figcaption class="meta">${esc(fullName(michael))} · President</figcaption></figure>
+</div>
+<figure class="family"><div class="frame frame-43" data-motion="frame">${pic('salcedo-family', 'The Salcedo family at the SGI office in Grand Prairie', { sizes: '(min-width: 900px) 50vw, 100vw' })}</div>
+<figcaption class="meta">( The Salcedo family at the SGI office, ${SITE.street}, ${SITE.city}. )</figcaption></figure>
+<div class="staff-v3" data-motion="rise">${STAFF.map((g) => `<div><p class="meta">( ${esc(g.k)} )</p>${g.v.map((n) => `<p>${esc(n)}</p>`).join('')}</div>`).join('')}</div>
+</section>
+
+<nav class="sec more" aria-labelledby="more-title">
+<h2 id="more-title" class="label">${markImg()}( More from Salcedo Group )</h2>
+<ul class="more-list">${more.map(([n, t, h, d]) => `<li><a href="${h}"><span class="num">${n}</span><span class="more-t"><span class="h-m">${t}</span><span class="more-d">${esc(d)}</span></span><span class="arr" aria-hidden="true">→</span></a></li>`).join('')}</ul>
+</nav>
+</div>`;
+  add('/firm/', page({ path: '/firm/', title: 'The firm: survey and design under one roof, Grand Prairie, TX', description: 'About Salcedo Group, Inc.: founded 2002 in Grand Prairie, Texas. Two principals registered as both PE and RPLS, two in-house survey crews, both seals under one roof.', active: 'firm', body, type: 'AboutPage', crumbs, image: 'grand-prairie-1' }));
 }
 
 // People

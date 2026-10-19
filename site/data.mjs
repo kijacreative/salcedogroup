@@ -4,12 +4,13 @@
 
 export const SITE = {
   // Set SITE_URL in the environment for production builds (no trailing slash).
-  url: (process.env.SITE_URL || 'https://salcedogroupinc.com').replace(/\/$/, ''),
+  url: (process.env.SITE_URL || 'https://www.salcedogroupinc.com').replace(/\/$/, ''),
   // Set FORM_ENDPOINT to a form backend (Formspree, Basin, a serverless function…).
   formEndpoint: process.env.FORM_ENDPOINT || '',
   name: 'Salcedo Group, Inc.',
   short: 'SGI',
   phone: '(214) 412-3122',
+  fax: '(214) 412-3089',
   tel: '+12144123122',
   street: '401 College Street',
   city: 'Grand Prairie',
@@ -19,6 +20,8 @@ export const SITE = {
   founded: '2002',
   employees: 10,
   credentials: ['Family-owned', 'Minority-owned', 'NCTRCA certified M/DBE', 'TxDOT precertified'],
+  registrations: [['Texas PE Firm Registration', 'F-5482'], ['Texas TBPLS Firm', '10070800']],
+  peStates: ['Texas', 'Oklahoma', 'Colorado'],
   description:
     'Salcedo Group, Inc. (SGI) is a family-owned, minority-owned civil engineering, land surveying and GIS firm in Grand Prairie, Texas, serving Dallas-Fort Worth since 2002.',
 };

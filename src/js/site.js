@@ -15,15 +15,27 @@
   /* ---------- header: menu, scrolled state, hide on scroll down, progress ---------- */
   const header = $('[data-header]');
   const menuBtn = $('[data-menu]');
-  const nav = $('#nav');
+  const index = $('[data-index]');
+  const nav = { classList: { contains: () => !index.hidden } };
   const setMenu = (open) => {
     menuBtn.setAttribute('aria-expanded', String(open));
-    nav.classList.toggle('is-open', open);
-    if (open) header.classList.remove('is-hidden');
+    index.hidden = !open;
+    d.body.style.overflow = open ? 'hidden' : '';
+    if (open) $('a', index).focus();
+    else menuBtn.focus();
   };
-  menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
-  d.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav?.classList.contains('is-open')) { setMenu(false); menuBtn.focus(); } });
-  nav?.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  menuBtn?.addEventListener('click', () => setMenu(true));
+  $('[data-index-close]')?.addEventListener('click', () => setMenu(false));
+  d.addEventListener('keydown', (e) => {
+    if (index.hidden) return;
+    if (e.key === 'Escape') setMenu(false);
+    if (e.key === 'Tab') {
+      const f = $$('a, button', index);
+      if (e.shiftKey && d.activeElement === f[0]) { f[f.length - 1].focus(); e.preventDefault(); }
+      else if (!e.shiftKey && d.activeElement === f[f.length - 1]) { f[0].focus(); e.preventDefault(); }
+    }
+  });
+  matchMedia('(min-width: 960px)').addEventListener('change', (m) => { if (m.matches && !index.hidden) setMenu(false); });
 
   const progress = $('[data-progress]');
   let lastY = scrollY;
@@ -32,7 +44,7 @@
     const y = scrollY;
     header.classList.toggle('is-scrolled', y > 8);
     if (!nav.classList.contains('is-open') && !d.activeElement?.closest?.('[data-header]')) {
-      header.classList.toggle('is-hidden', y > 360 && y > lastY + 2);
+      header.classList.toggle('is-hidden', y > 200 && y > lastY + 2);
       if (y < lastY - 2) header.classList.remove('is-hidden');
     }
     const max = d.documentElement.scrollHeight - innerHeight;
@@ -311,6 +323,17 @@
     });
     gsap.to(svg, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: svg.parentElement, start: 'top top', end: 'bottom top', scrub: true } });
   });
+
+  // v3 motion (sgi-v3-motion.js): rise, frame wipes and the "Sealed" promise word.
+  $$('[data-motion="rise"]').forEach((el) => gsap.from(el, { y: 34, opacity: 0, duration: 0.9, ease: EASE, scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
+  $$('[data-motion="frame"]').forEach((el) => gsap.from(el, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: EASE, scrollTrigger: { trigger: el, start: 'top 85%', once: true } }));
+  const pWord = $('[data-promise-word]');
+  const pScene = $('[data-scene="promise"]');
+  if (pWord && pScene) {
+    const st = { trigger: pScene, start: 'top 90%', end: 'top 30%', scrub: true };
+    gsap.fromTo(pWord, { scaleX: 1.4, opacity: 0.15 }, { scaleX: 1, opacity: 1, ease: 'none', scrollTrigger: st });
+    $$('[data-promise-copy]').forEach((c, i) => gsap.fromTo(c, { y: 0, opacity: 0 }, { y: (i + 1) * -7 + '%', opacity: 0.32 - i * 0.09, ease: 'none', scrollTrigger: { ...st } }));
+  }
 
   ScrollTrigger.batch('[data-reveal]', {
     start: 'top 88%',
