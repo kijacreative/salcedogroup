@@ -29,16 +29,16 @@ export const SITE = {
 // Intrinsic pixel sizes of every image in src/img (used for width/height to prevent layout shift).
 export const IMG = {
   'beckley-1': [616, 370], 'beckley-2': [379, 284], 'beckley-3': [1108, 529], 'beckley-plan': [1107, 625],
-  'camp-wisdom-1': [470, 276], 'camp-wisdom-2': [471, 265], 'camp-wisdom-3': [1133, 567], 'camp-wisdom-map': [1107, 625],
+  'camp-wisdom-1': [470, 276], 'camp-wisdom-2': [471, 265], 'camp-wisdom-3': [1774, 887], 'camp-wisdom-map': [1774, 887], 'camp-wisdom-road': [1637, 960],
   'dev-702-davis': [609, 667], 'dev-altoona': [490, 711], 'dev-aventine': [560, 370], 'dev-bishop-canopy': [545, 372],
   'dev-hotel-revel': [565, 474], 'dev-munger-court': [565, 474], 'dev-peachtree': [551, 365], 'dev-treehaus': [471, 362],
-  'grand-prairie-1': [1666, 827], 'grand-prairie-2': [462, 280], 'grand-prairie-3': [617, 371],
+  'grand-prairie-1': [1666, 827], 'grand-prairie-city-hall': [1618, 972], 'grand-prairie-2': [462, 280], 'grand-prairie-3': [617, 371],
   'harold-simmons-1': [1162, 575], 'harold-simmons-2': [380, 275], 'harold-simmons-3': [381, 287],
   'hiline-1': [1274, 848], 'hiline-2': [510, 357], 'hiline-rendering': [1107, 625],
   'luis-salcedo': [245, 306], 'michael-salcedo': [240, 283],
   'pacific-plaza-1': [1281, 504], 'pacific-plaza-2': [499, 357], 'pacific-plaza-3': [1052, 667],
   'pacific-plaza-aerial': [643, 404], 'pacific-plaza-grove': [643, 399], 'pacific-plaza-pavilion': [814, 429],
-  'ribbon-cutting-2019': [547, 348], 'salcedo-family': [714, 374],
+  'ribbon-cutting-2019': [547, 348], 'salcedo-family': [1732, 908],
 };
 
 export const PEOPLE = [
@@ -189,8 +189,8 @@ export const PROJECTS = [
     client: 'Dallas County Public Works',
     type: 'Transportation',
     cover: 'camp-wisdom-3',
-    imgs: ['camp-wisdom-3', 'camp-wisdom-map', 'camp-wisdom-1', 'camp-wisdom-2'],
-    alts: ['Camp Wisdom Road reconstruction near Mountain Creek', 'Project map of the 1.8-mile Camp Wisdom Road corridor', 'Camp Wisdom Road construction', 'Mountain Creek bridge construction on Camp Wisdom Road'],
+    imgs: ['camp-wisdom-3', 'camp-wisdom-road', 'camp-wisdom-map', 'camp-wisdom-1', 'camp-wisdom-2'],
+    alts: ['Rendering of the new Camp Wisdom Road bridge over Mountain Creek', 'Rendering of the reconstructed Camp Wisdom Road thoroughfare and trail at dusk', 'Project map of the 1.8-mile Camp Wisdom Road corridor', 'Camp Wisdom Road construction', 'Mountain Creek bridge construction on Camp Wisdom Road'],
     year: '2019',
     status: 'Design complete 2019; construction underway',
     cost: '$21 million',
@@ -238,9 +238,9 @@ export const PROJECTS = [
     place: 'jurisdiction:grand-prairie',
     client: 'City of Grand Prairie',
     type: 'Municipal',
-    cover: 'grand-prairie-1',
-    imgs: ['grand-prairie-1', 'grand-prairie-3', 'grand-prairie-2'],
-    alts: ['Grand Prairie City Hall and its linear rain garden', 'Grand Prairie municipal campus plaza', 'Rain garden at Grand Prairie City Hall'],
+    cover: 'grand-prairie-city-hall',
+    imgs: ['grand-prairie-city-hall', 'grand-prairie-1', 'grand-prairie-3', 'grand-prairie-2'],
+    alts: ['Grand Prairie City Hall at dusk', 'Grand Prairie City Hall and its linear rain garden', 'Grand Prairie municipal campus plaza', 'Rain garden at Grand Prairie City Hall'],
     year: '2019',
     status: 'Phase 1 complete; Phase 2 in design',
     cost: '$20 million',

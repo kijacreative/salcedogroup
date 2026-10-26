@@ -380,7 +380,7 @@ ${ctaBand()}`;
 </ul>
 </div>
 </div>
-<figure class="wide-fig"><div class="frame frame-wide" data-motion="frame">${pic('grand-prairie-1', 'Grand Prairie City Hall, engineer of record Salcedo Group, Inc.', { eager: true, sizes: '100vw' })}</div>
+<figure class="wide-fig"><div class="frame frame-wide" data-motion="frame">${pic('grand-prairie-city-hall', 'Grand Prairie City Hall at dusk, engineer of record Salcedo Group, Inc.', { eager: true, sizes: '100vw' })}</div>
 <figcaption class="meta">( <a href="/projects/grand-prairie-city-hall/">Grand Prairie Municipal Campus and New City Hall</a>, 11 acres downtown. SGI is engineer of record, a block from our own office. )</figcaption></figure>
 </section>
 
@@ -415,7 +415,7 @@ ${principal(michael, 'President', 'Second generation of the firm. Leads survey i
 <ul class="more-list">${more.map(([n, t, h, d]) => `<li><a href="${h}"><span class="num">${n}</span><span class="more-t"><span class="h-m">${t}</span><span class="more-d">${esc(d)}</span></span><span class="arr" aria-hidden="true">→</span></a></li>`).join('')}</ul>
 </nav>
 </div>`;
-  add('/firm/', page({ path: '/firm/', title: 'The firm: survey and design under one roof, Grand Prairie, TX', description: 'About Salcedo Group, Inc.: founded 2002 in Grand Prairie, Texas. Two principals registered as both PE and RPLS, two in-house survey crews, both seals under one roof.', active: 'firm', body, type: 'AboutPage', crumbs, image: 'grand-prairie-1' }));
+  add('/firm/', page({ path: '/firm/', title: 'The firm: survey and design under one roof, Grand Prairie, TX', description: 'About Salcedo Group, Inc.: founded 2002 in Grand Prairie, Texas. Two principals registered as both PE and RPLS, two in-house survey crews, both seals under one roof.', active: 'firm', body, type: 'AboutPage', crumbs, image: 'grand-prairie-city-hall' }));
 }
 
 // People
