@@ -1,10 +1,33 @@
 {
-  "buildCommand": "node site/build.mjs",
+  "buildCommand": "node tools/build.mjs",
+  "installCommand": "echo skip",
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": true,
+  "redirects": [
+    { "source": "/firm/luis-salcedo/", "destination": "/firm/team/luis-salcedo/", "permanent": true },
+    { "source": "/firm/michael-salcedo/", "destination": "/firm/team/michael-salcedo/", "permanent": true },
+    { "source": "/services/civil-engineering/municipal-engineering-design/", "destination": "/services/civil-engineering/municipal-design/", "permanent": true },
+    { "source": "/services/civil-engineering/paving-drainage-utility-design/", "destination": "/services/civil-engineering/paving-design/", "permanent": true },
+    { "source": "/services/civil-engineering/hydrology-hydraulic-studies/", "destination": "/services/hydrology-and-hydraulics/", "permanent": true },
+    { "source": "/services/civil-engineering/corridor-studies-multimodal-design/", "destination": "/services/civil-engineering/corridor-studies-and-multi-modal-design/", "permanent": true },
+    { "source": "/services/land-surveying/boundary-title-surveys-plats/", "destination": "/services/land-surveying/boundary-and-title-surveys/", "permanent": true },
+    { "source": "/services/land-surveying/topographic-surveys-3d-modeling/", "destination": "/services/land-surveying/topographic-design-surveys/", "permanent": true },
+    { "source": "/services/land-surveying/construction-staking-inspection/", "destination": "/services/land-surveying/construction-staking/", "permanent": true },
+    { "source": "/services/construction-administration/:slug(submittal-review|on-site-inspection|rfi-responses|value-engineering)/", "destination": "/services/construction-administration/#:slug", "permanent": true },
+    { "source": "/services/gis-and-geospatial/:slug(gis-planning|gis-mapping|spatial-analysis)/", "destination": "/services/gis-and-geospatial/#:slug", "permanent": true },
+    { "source": "/services/hydrology-and-hydraulics/detention-design/", "destination": "/services/civil-engineering/storm-drainage-design/#detention-design", "permanent": true },
+    { "source": "/services/construction-administration/as-built-surveys/", "destination": "/services/land-surveying/construction-staking/#as-built-surveys", "permanent": true },
+    { "source": "/where-we-work/:slug(fort-worth|balch-springs)/", "destination": "/services/land-development/", "permanent": true },
+    { "source": "/where-we-work/dallas/", "destination": "/where-we-work/city-of-dallas/", "permanent": true },
+    { "source": "/projects/", "destination": "/work/", "permanent": true },
+    { "source": "/projects/beckley-commerce/", "destination": "/work/beckley-at-commerce/", "permanent": true },
+    { "source": "/projects/grand-prairie-city-hall/", "destination": "/work/grand-prairie-municipal-campus/", "permanent": true },
+    { "source": "/projects/:slug/", "destination": "/work/:slug/", "permanent": true },
+    { "source": "/faq/", "destination": "/contact/#questions", "permanent": true }
+  ],
   "headers": [
-    { "source": "/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/(.*)", "headers": [
       { "key": "X-Content-Type-Options", "value": "nosniff" },
       { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }

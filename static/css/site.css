@@ -1,0 +1,51 @@
+/* Salcedo Group, Inc. — site chrome for the pre-rendered v4 pages.
+   Page layouts carry their own inline styles from the design handoff; this file holds the
+   responsive header, the Index overlay and the generated hover styles (appended at build). */
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* Header */
+.hd { position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 64px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: clamp(12px, 1.6vw, 24px); padding: 0 clamp(16px, 2.5vw, 32px); background: #FFFFFF; border-bottom: 1px solid #E8E4DC; font-family: Archivo, Arial, sans-serif; font-size: 15px; line-height: 1; color: #1F2D28; transition: transform .5s cubic-bezier(.7, 0, .2, 1); }
+.hd.is-hidden { transform: translateY(-100%); }
+.hd-logo { display: block; flex: none; }
+.hd-logo img { display: block; height: 38px; width: auto; }
+.hd-nav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 32px); }
+.hd-link { display: inline-flex; align-items: baseline; gap: 7px; padding: 8px 0 6px; font-weight: 500; text-decoration: none; color: #1F2D28; border-bottom: 2px solid transparent; white-space: nowrap; }
+.hd-link span { font-size: 11px; font-weight: 500; color: #F43D2C; }
+.hd-link[aria-current="page"] { border-bottom-color: #F43D2C; }
+.hd-link:hover { border-bottom-color: #F43D2C; color: #135222; }
+.hd-actions { display: flex; align-items: center; gap: 18px; }
+.hd-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 0 16px; background: #135222; color: #FFFFFF; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.hd-cta:hover { background: #F43D2C; color: #FFFFFF; }
+.hd-index { display: none; align-items: center; justify-content: center; min-height: 38px; padding: 0 14px; border: 1px solid currentColor; background: transparent; color: #1F2D28; font: 500 15px/1 Archivo, Arial, sans-serif; cursor: pointer; }
+.hd-index:hover { background: #E8E4DC; }
+@media (max-width: 959.98px) {
+  .hd-nav, .hd-cta { display: none; }
+  .hd-index { display: inline-flex; }
+}
+
+/* Index overlay (under 960px) */
+.ix { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; gap: 24px; padding: 12px clamp(16px, 2.5vw, 32px) 28px; overflow-y: auto; background: #FFFFFF; font-family: Archivo, Arial, sans-serif; color: #1F2D28; }
+.ix-top { display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
+.ix-top span { font-size: 13px; line-height: 1.35; font-weight: 500; color: #5E6368; }
+.ix-top button { display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; background: transparent; color: #1F2D28; cursor: pointer; }
+.ix-top button:hover { background: #E8E4DC; }
+.ix-top svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.ix ol { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid #E8E4DC; }
+.ix ol a { display: flex; align-items: baseline; gap: 18px; padding: 14px 0; border-bottom: 1px solid #E8E4DC; text-decoration: none; color: #1F2D28; }
+.ix ol a span:first-child { min-width: 2.4em; font-size: 13px; font-weight: 500; color: #F43D2C; }
+.ix ol a span:last-child { font-weight: 600; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.04; letter-spacing: -0.025em; }
+.ix ol a[aria-current="page"] span:last-child { color: #135222; }
+.ix-cta { display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; min-height: 52px; padding: 0 26px; background: #135222; color: #FFFFFF; font-size: 15px; font-weight: 500; line-height: 1; text-decoration: none; }
+.ix-cta:hover { background: #F43D2C; color: #FFFFFF; }
+.ix-foot { margin: auto 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; line-height: 1.35; font-weight: 500; color: #5E6368; }
+.ix-foot img { width: 14px; height: 14px; display: block; flex: none; }
+.ix-foot a { color: #1F2D28; text-decoration: none; border-bottom: 1px solid currentColor; }
+html.ix-open { overflow: hidden; }
+
+/* Contact form states */
+[data-form] [aria-invalid="true"] { border-bottom-color: #F43D2C !important; }
+.form-msg { margin: 0; font-size: 15px; line-height: 1.45; color: #C4461F; }

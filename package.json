@@ -1,11 +1,15 @@
 {
   "name": "salcedo-group-site",
-  "version": "2.0.0",
+  "version": "4.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node site/build.mjs",
-    "dev": "node site/build.mjs && npx --yes serve dist -l 4173"
+    "prerender": "node tools/prerender.mjs",
+    "build": "node tools/build.mjs",
+    "dev": "node tools/build.mjs && python3 -m http.server 4173 -d dist"
   },
-  "engines": { "node": ">=18" }
+  "engines": { "node": ">=18" },
+  "devDependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
 }

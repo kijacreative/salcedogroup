@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-3c1d50ec-ed22-4c41-811a-d287e96e7237/styles.css">
+<script src="_ds/nocturne-3c1d50ec-ed22-4c41-811a-d287e96e7237/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&amp;display=swap">
+</helmet>
+<header ref="{{ bar }}" style="position:fixed;top:0;left:0;right:0;z-index:50;height:64px;display:flex;align-items:center;justify-content:space-between;gap:clamp(12px,1.6vw,24px);padding:0 clamp(16px,2.5vw,32px);background:#FFFFFF;border-bottom:1px solid #E8E4DC;font-family:Archivo,Arial,sans-serif;font-size:15px;line-height:1;color:#1F2D28;transition:transform .5s cubic-bezier(.7,0,.2,1)">
+<a href="home.dc.html" aria-label="Salcedo Group, Inc. home" style="display:block;flex:none"><img src="assets/brand/sgi-lockup.svg" alt="SGi, Salcedo Group, Inc." style="display:block;height:38px;width:auto"></a>
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Main" style="display:flex;align-items:center;gap:clamp(18px,2.2vw,32px)">
+<sc-for list="{{ pages }}" as="p" hint-placeholder-count="5">
+<a href="{{ p.href }}" aria-current="{{ p.current }}" style="display:inline-flex;align-items:baseline;gap:7px;padding:8px 0 6px;font-weight:500;text-decoration:none;color:#1F2D28;border-bottom:2px solid {{ p.line }};white-space:nowrap" style-hover="border-bottom-color:#F43D2C;color:#135222"><span style="font-size:11px;font-weight:500;color:#F43D2C">{{ p.num }}</span>{{ p.label }}</a>
+</sc-for>
+</nav>
+</sc-if>
+<div style="display:flex;align-items:center;gap:18px">
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<a href="contact.dc.html" style="display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 16px;background:#135222;color:#FFFFFF;font-weight:500;text-decoration:none;white-space:nowrap" style-hover="background:#F43D2C;color:#FFFFFF">Request a proposal</a>
+</sc-if>
+<sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ openMenu }}" aria-expanded="{{ openStr }}" aria-controls="site-index" style="display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:1px solid currentColor;background:transparent;color:#1F2D28;font:500 15px/1 Archivo,Arial,sans-serif;cursor:pointer" style-hover="background:#E8E4DC">Index</button>
+</sc-if>
+</div>
+</header>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+<div id="site-index" role="dialog" aria-modal="true" aria-label="Site index" style="position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;gap:24px;padding:12px clamp(16px,2.5vw,32px) 28px;overflow-y:auto;background:#FFFFFF;font-family:Archivo,Arial,sans-serif;color:#1F2D28">
+<div style="display:flex;align-items:center;justify-content:space-between;min-height:40px">
+<span style="font-size:13px;line-height:1.35;font-weight:500;color:#5E6368">( Index )</span>
+<button type="button" onClick="{{ closeMenu }}" aria-label="Close index" style="display:inline-grid;place-items:center;width:40px;height:40px;padding:0;border:0;background:transparent;color:#1F2D28;cursor:pointer" style-hover="background:#E8E4DC"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</div>
+<ol style="list-style:none;margin:0;padding:0;display:grid;border-top:1px solid #E8E4DC">
+<li><a href="home.dc.html" style="display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid #E8E4DC;text-decoration:none;color:#1F2D28"><span style="min-width:2.4em;font-size:13px;font-weight:500;color:#F43D2C">00</span><span style="font-weight:600;font-size:clamp(30px,3.6vw,52px);line-height:1.04;letter-spacing:-0.025em">Home</span></a></li>
+<sc-for list="{{ pages }}" as="p" hint-placeholder-count="5">
+<li><a href="{{ p.href }}" aria-current="{{ p.current }}" style="display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid #E8E4DC;text-decoration:none;color:#1F2D28"><span style="min-width:2.4em;font-size:13px;font-weight:500;color:#F43D2C">{{ p.num }}</span><span style="font-weight:600;font-size:clamp(30px,3.6vw,52px);line-height:1.04;letter-spacing:-0.025em">{{ p.label }}</span></a></li>
+</sc-for>
+</ol>
+<a href="contact.dc.html" style="display:inline-flex;align-items:center;justify-content:center;justify-self:start;min-height:52px;padding:0 26px;background:#135222;color:#FFFFFF;font-size:15px;font-weight:500;line-height:1;text-decoration:none;align-self:flex-start" style-hover="background:#F43D2C;color:#FFFFFF">Request a proposal</a>
+<p style="margin:auto 0 0;display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.35;font-weight:500;color:#5E6368"><img src="assets/brand/sgi-mark.svg" alt="" aria-hidden="true" style="width:14px;height:14px;display:block;flex:none">( Grand Prairie, TX ) · <a href="tel:+12144123122" style="color:#1F2D28;text-decoration:none;border-bottom:1px solid currentColor">(214) 412-3122</a></p>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;current&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;firm&quot;,&quot;services&quot;,&quot;work&quot;,&quot;credentials&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;}}">
+class Component extends DCLogic {
+  state = { open: false, w: typeof window !== 'undefined' ? window.innerWidth : 1400 };
+  bar = React.createRef();
+  componentDidMount() {
+    this.onR = () => this.setState({ w: window.innerWidth });
+    this.onKey = e => { if (e.key === 'Escape' && this.state.open) this.setState({ open: false }); };
+    this.lastY = window.scrollY;
+    this.onS = () => { const y = window.scrollY, b = this.bar.current; if (b) b.style.transform = (y > 200 && y > this.lastY) ? 'translateY(-100%)' : 'translateY(0)'; this.lastY = y; };
+    window.addEventListener('resize', this.onR); window.addEventListener('keydown', this.onKey); window.addEventListener('scroll', this.onS, { passive: true });
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); window.removeEventListener('keydown', this.onKey); window.removeEventListener('scroll', this.onS); }
+  renderVals() {
+    const cur = this.props.current || 'home';
+    const pages = [['01', 'Firm', 'firm.dc.html', 'firm'], ['02', 'Services', 'services.dc.html', 'services'], ['03', 'Work', 'work.dc.html', 'work'], ['04', 'Credentials', 'credentials.dc.html', 'credentials'], ['05', 'Contact', 'contact.dc.html', 'contact']]
+      .map(([num, label, href, id]) => ({ num, label, href, current: id === cur ? 'page' : null, line: id === cur ? '#F43D2C' : 'transparent' }));
+    const wide = this.state.w >= 960;
+    return { bar: this.bar, pages, wide, narrow: !wide, open: this.state.open && !wide, openStr: String(this.state.open), openMenu: () => this.setState({ open: true }), closeMenu: () => this.setState({ open: false }) };
+  }
+}
+</script>
+</body>
+</html>

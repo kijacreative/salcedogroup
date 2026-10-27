@@ -1,30 +1,22 @@
-# Salcedo Group, Inc. website (v2)
+# Salcedo Group, Inc. website (v4)
 
-Static site generated from `site/data.mjs` by `site/build.mjs` (Node 18+, no dependencies).
+Production: https://www.salcedogroupinc.com
 
+## How it's built
+- `design/`: the Claude Design handoff (Version 4). The `*.dc.html` files are the source of truth for copy, layout, URLs and structured data.
+- `tools/prerender.mjs`: loads every design page in headless Chrome and writes fully rendered static HTML to `public/` (committed). It swaps in a static header and Index menu, turns the design's hover styles into shared classes, adds image width and height, and maps `*.dc.html` links to the live URLs.
+- `static/`: hand-written site chrome (`css/site.css`, `js/site.js`) and `logo.png`.
+- `tools/build.mjs`: builds `dist/` from `public/`, `static/` and `design/assets`, then checks every internal link. Vercel runs this, and it needs no dependencies.
+
+## Workflow
 ```bash
-npm run build          # writes ./dist
-SITE_URL=https://example.com FORM_ENDPOINT=https://formspree.io/f/xxxx npm run build
+npm install          # puppeteer-core, only needed for prerender
+npm run prerender    # after changing anything in design/
+npm run dev          # build and serve dist/ on :4173
 ```
 
-- `site/data.mjs`: all content (people, projects, services, places, FAQ). Every claim comes from the 2025 SGI Firm Profile.
-- `src/`: CSS, JS, images (WebP), favicon and logo, copied into `dist/` as-is.
-- `vercel.json`: builds on Vercel with clean, trailing-slash URLs.
+## Environment (Vercel)
+- `FORM_ENDPOINT`: the URL the contact form POSTs to (Formspree, Basin, etc.). Without it, the form asks visitors to call.
+- `REVIEW_MARKS=off`: removes the "Draft for SGI review" notes once SGI signs off on the copy.
 
-## SEO / AEO
-- Unique title, description, canonical, Open Graph and Twitter tags per page.
-- JSON-LD `@graph` on every page: Organization + ProfessionalService, WebSite, WebPage (with speakable), BreadcrumbList,
-  plus Person (team bios), Service (each service), CreativeWork (projects), FAQPage, ItemList and City/AdministrativeArea.
-- Answer-first "In brief" summaries and question-style headings for answer engines.
-- `sitemap.xml` (with image entries), `robots.txt` (explicitly allows AI crawlers), `llms.txt` and `llms-full.txt`.
-
-## Motion
-GSAP 3.12.5 + ScrollTrigger (cdnjs), following the Open Design `gsap-scrolltrigger` and `emilkowalski-motion` skills:
-word-mask headline reveals, contour lines that draw themselves, count-up stats, a pinned horizontal "how we work" sequence,
-batched scroll reveals and image parallax. Everything respects `prefers-reduced-motion`, and content stays visible if
-scripts fail to load.
-
-## Before launch
-- Production domain is `https://www.salcedogroupinc.com` (override with `SITE_URL` for staging builds).
-- Set `FORM_ENDPOINT` so the proposal form can deliver requests; until then it asks visitors to call.
-- Several source images are under 1,200px wide; higher-resolution originals will sharpen the hero and galleries.
+Redirects for the old v2/v3 URLs and the merged pages are in `vercel.json`.
