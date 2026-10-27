@@ -72,7 +72,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Where does Salcedo Group work?", "acceptedAnswer": { "@type": "Answer", "text": "Dallas, Dallas County, Grand Prairie, Fort Worth and Balch Springs, with professional engineering licensure in Texas, Oklahoma and Colorado." } },
+    { "@type": "Question", "name": "Where does Salcedo Group work?", "acceptedAnswer": { "@type": "Answer", "text": "Dallas, Dallas County, Grand Prairie, Fort Worth and Sunnyvale, with professional engineering licensure in Texas, Oklahoma and Colorado." } },
     { "@type": "Question", "name": "Does SGI self-perform survey?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Two in-house survey crews handle boundary, topographic and construction staking, so survey and design never leave the building." } },
     { "@type": "Question", "name": "When does a project need an RPLS and when a PE?", "acceptedAnswer": { "@type": "Answer", "text": "Boundary surveys and plats are sealed by a Registered Professional Land Surveyor; engineering plans are sealed by a Professional Engineer. Both SGI principals hold both registrations." } },
     { "@type": "Question", "name": "Does SGI count toward M/DBE participation goals?", "acceptedAnswer": { "@type": "Answer", "text": "SGI is NCTRCA certified M/DBE, a federal Small Disadvantaged Business and TxDOT precertified. Certificates are available on request." } },
@@ -125,7 +125,7 @@ summary::-webkit-details-marker{display:none;}
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:22px clamp(12px,1.6vw,24px)">
 <label style="display:grid;gap:6px;font-size:13px;line-height:1.35;font-weight:500">Project type<select required name="type" style="width:100%;min-height:44px;padding:10px 0;border:0;border-bottom:1px solid #135222;border-radius:0;background:transparent;font:400 17px/1.4 Archivo,Arial,sans-serif;color:#1F2D28" style-focus="border-bottom-color:#F43D2C;outline:none !important"><option value="">Select</option><option>Municipal</option><option>Transportation</option><option>Parks and trails</option><option>Water resources</option><option>Land development</option><option>Survey only</option></select></label>
-<label style="display:grid;gap:6px;font-size:13px;line-height:1.35;font-weight:500">Jurisdiction<select name="jurisdiction" style="width:100%;min-height:44px;padding:10px 0;border:0;border-bottom:1px solid #135222;border-radius:0;background:transparent;font:400 17px/1.4 Archivo,Arial,sans-serif;color:#1F2D28" style-focus="border-bottom-color:#F43D2C;outline:none !important"><option value="">Select</option><option>City of Dallas</option><option>Dallas County</option><option>Grand Prairie</option><option>Fort Worth</option><option>Balch Springs</option><option>Other</option></select></label>
+<label style="display:grid;gap:6px;font-size:13px;line-height:1.35;font-weight:500">Jurisdiction<select name="jurisdiction" style="width:100%;min-height:44px;padding:10px 0;border:0;border-bottom:1px solid #135222;border-radius:0;background:transparent;font:400 17px/1.4 Archivo,Arial,sans-serif;color:#1F2D28" style-focus="border-bottom-color:#F43D2C;outline:none !important"><option value="">Select</option><option>City of Dallas</option><option>Dallas County</option><option>Grand Prairie</option><option>Fort Worth</option><option>Sunnyvale</option><option>Other</option></select></label>
 </div>
 <label style="display:grid;gap:6px;font-size:13px;line-height:1.35;font-weight:500">Brief description<textarea name="desc" rows="4" style="width:100%;min-height:96px;padding:10px 0;border:0;border-bottom:1px solid #135222;border-radius:0;background:transparent;font:400 17px/1.4 Archivo,Arial,sans-serif;color:#1F2D28;resize:vertical" style-focus="border-bottom-color:#F43D2C;outline:none !important"></textarea></label>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:8px">
@@ -187,7 +187,7 @@ class Component extends DCLogic {
       root: this.root, notSent: !this.state.sent, sent: this.state.sent,
       submit: e => { e.preventDefault(); this.setState({ sent: true }); },
       faqs: [
-        { label: 'Area', q: 'Where do you work?', a: 'Dallas, Dallas County, Grand Prairie, Fort Worth and Balch Springs, with professional engineering licensure in Texas, Oklahoma and Colorado.' },
+        { label: 'Area', q: 'Where do you work?', a: 'Dallas, Dallas County, Grand Prairie, Fort Worth and Sunnyvale, with professional engineering licensure in Texas, Oklahoma and Colorado.' },
         { label: 'Survey', q: 'Do you self-perform survey?', a: 'Yes. Two in-house survey crews handle boundary, topographic and construction staking, so survey and design never leave the building.' },
         { label: 'Seals', q: 'When does a project need an RPLS and when a PE?', a: 'Boundary surveys and plats are sealed by a Registered Professional Land Surveyor; engineering plans are sealed by a Professional Engineer. Both SGI principals hold both registrations.' },
         { label: 'Goals', q: 'Does SGI count toward M/DBE participation goals?', a: 'SGI is NCTRCA certified M/DBE, a federal Small Disadvantaged Business and TxDOT precertified. Certificates are available on request.' },

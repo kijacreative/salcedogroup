@@ -6,7 +6,7 @@
   "scripts": {
     "prerender": "node tools/prerender.mjs",
     "build": "node tools/build.mjs",
-    "dev": "node tools/build.mjs && python3 -m http.server 4173 -d dist"
+    "dev": "node tools/build.mjs && python3 -m http.server 4174 -d dist"
   },
   "engines": { "node": ">=18" },
   "devDependencies": {

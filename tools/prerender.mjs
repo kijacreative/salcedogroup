@@ -58,7 +58,6 @@ export const ROUTES = {
   'camp-wisdom-road': '/work/camp-wisdom-road/',
   'grand-prairie-municipal-campus': '/work/grand-prairie-municipal-campus/',
   'harold-simmons-park': '/work/harold-simmons-park/',
-  'hi-line-connection': '/work/hi-line-connection/',
   'pacific-plaza': '/work/pacific-plaza/',
 };
 // pages the design links to that were merged away

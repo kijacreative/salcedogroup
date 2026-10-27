@@ -20,6 +20,8 @@
     { "source": "/services/construction-administration/as-built-surveys/", "destination": "/services/land-surveying/construction-staking/#as-built-surveys", "permanent": true },
     { "source": "/where-we-work/:slug(fort-worth|balch-springs)/", "destination": "/services/land-development/", "permanent": true },
     { "source": "/where-we-work/dallas/", "destination": "/where-we-work/city-of-dallas/", "permanent": true },
+    { "source": "/work/hi-line-connection/", "destination": "/work/", "permanent": false },
+    { "source": "/projects/hi-line-connection/", "destination": "/work/", "permanent": false },
     { "source": "/projects/", "destination": "/work/", "permanent": true },
     { "source": "/projects/beckley-commerce/", "destination": "/work/beckley-at-commerce/", "permanent": true },
     { "source": "/projects/grand-prairie-city-hall/", "destination": "/work/grand-prairie-municipal-campus/", "permanent": true },

@@ -11,7 +11,9 @@ const p = (...a) => path.join(ROOT, ...a);
 const FORM_ENDPOINT = process.env.FORM_ENDPOINT || '';
 const STRIP_REVIEW = /^(off|false|0)$/i.test(process.env.REVIEW_MARKS || '');
 
-fs.rmSync(DIST, { recursive: true, force: true });
+// empty dist/ in place so a running preview server keeps serving it
+fs.mkdirSync(DIST, { recursive: true });
+for (const e of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, e), { recursive: true, force: true });
 fs.cpSync(p('public'), DIST, { recursive: true });
 fs.cpSync(p('static'), DIST, { recursive: true });
 fs.cpSync(p('design', 'assets'), path.join(DIST, 'assets'), { recursive: true });
